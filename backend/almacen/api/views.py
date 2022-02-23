@@ -1,8 +1,9 @@
+from dataclasses import dataclass
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import Categoria
-from .serializers import CategoriaSerializer
+from .models import Categoria,Ambiente
+from .serializers import CategoriaSerializer,AmbienteSerializer
 
 class IndexView(APIView):
     def get(self,request):
@@ -41,3 +42,34 @@ class CategoriaDetailView(APIView):
         serCategoria=CategoriaSerializer(dataCategoria)
         dataCategoria.delete()
         return Response(serCategoria.data)
+
+class AmbienteView(APIView):
+    def get(self,request):
+        dataAmbiente=Ambiente.objects.all()
+        serAmbiente=AmbienteSerializer(dataAmbiente,many=True)
+        return Response(serAmbiente.data)
+
+    def post(self,request):
+        serAmbiente=AmbienteSerializer(data=request.data)
+        serAmbiente.is_valid(raise_exception=True)
+        serAmbiente.save()
+        return Response(serAmbiente.data)
+
+class AmbienteDetailView(APIView):
+    def get(self,request,ambiente_id):
+        dataAmbiente=Ambiente.objects.get(pk=ambiente_id)
+        serAmbiente=AmbienteSerializer(dataAmbiente)
+        return Response(serAmbiente.data)
+
+    def put(self,request,ambiente_id):
+        dataAmbiente=Ambiente.objects.get(pk=ambiente_id)
+        serAmbiente=AmbienteSerializer(dataAmbiente,data=request.data)
+        serAmbiente.is_valid(raise_exception=True)
+        serAmbiente.save()
+        return Response(serAmbiente.data)
+
+    def delete(self,request,ambiente_id):
+        dataAmbiente=Ambiente.objects.get(pk=ambiente_id)
+        serAmbiente=AmbienteSerializer(dataAmbiente)
+        dataAmbiente.delete()
+        return Response(serAmbiente.data)
