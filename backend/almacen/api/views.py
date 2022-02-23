@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import Categoria,Ambiente
-from .serializers import CategoriaSerializer,AmbienteSerializer
+from .models import Categoria,Ambiente,Producto,Movimiento,MovimientoDetalle
+from .serializers import CategoriaSerializer,AmbienteSerializer,ProductoSerializer,MovimientoSerializer,MovimientoDetalleSerializer
 
 class IndexView(APIView):
     def get(self,request):
@@ -73,3 +73,93 @@ class AmbienteDetailView(APIView):
         serAmbiente=AmbienteSerializer(dataAmbiente)
         dataAmbiente.delete()
         return Response(serAmbiente.data)
+
+class ProductoView(APIView):
+    def get(self,request):
+        dataProducto=Producto.objects.all()
+        serProducto=ProductoSerializer(dataProducto,many=True)
+        return Response(serProducto.data)
+
+    def post(self,request):
+        serProducto=ProductoSerializer(data=request.data)
+        serProducto.is_valid(raise_exception=True)
+        serProducto.save()
+        return Response(serProducto.data)
+class ProductoDetailView(APIView):
+    def get(self,request,producto_id):
+        dataProducto=Producto.objects.get(pk=producto_id)
+        serProducto=ProductoSerializer(dataProducto)
+        return Response(serProducto.data)
+
+    def put(self,request,producto_id):
+        dataProducto=Producto.objects.get(pk=producto_id)
+        serProducto=ProductoSerializer(dataProducto,data=request.data)
+        serProducto.is_valid(raise_exception=True)
+        serProducto.save()
+        return Response(serProducto.data)
+
+    def delete(self,request,producto_id):
+        dataProducto=Producto.objects.get(pk=producto_id)
+        serProducto=ProductoSerializer(dataProducto)
+        dataProducto.delete()
+        return Response(serProducto.data)
+class MovimientoView(APIView):
+    def get(self,request):
+        dataMovimiento=Movimiento.objects.all()
+        serMovimiento=MovimientoSerializer(dataMovimiento,many=True)
+        return Response(serMovimiento.data)
+
+    def post(self,request):
+        serMovimiento=MovimientoSerializer(data=request.data)
+        serMovimiento.is_valid(raise_exception=True)
+        serMovimiento.save()
+        return Response(serMovimiento.data)
+class MovimientoDetailView(APIView):
+    def get(self,request,movimiento_id):
+        dataMovimiento=Movimiento.objects.get(pk=movimiento_id)
+        serMovimiento=MovimientoSerializer(dataMovimiento)
+        return Response(serMovimiento.data)
+
+    def put(self,request,movimiento_id):
+        dataMovimiento=Movimiento.objects.get(pk=movimiento_id)
+        serMovimiento=MovimientoSerializer(dataMovimiento,data=request.data)
+        serMovimiento.is_valid(raise_exception=True)
+        serMovimiento.save()
+        return Response(serMovimiento.data)
+
+    def delete(self,request,movimiento_id):
+        dataMovimiento=Producto.objects.get(pk=movimiento_id)
+        serMovimiento=ProductoSerializer(dataMovimiento)
+        dataMovimiento.delete()
+        return Response(serMovimiento.data)
+
+class MovimientoDetalleView(APIView):
+    def get(self,request):
+        dataMovimientoDetalle=MovimientoDetalle.objects.all()
+        serMovimientoDetalle=MovimientoDetalleSerializer(dataMovimientoDetalle,many=True)
+        return Response(serMovimientoDetalle.data)
+
+    def post(self,request):
+        serMovimientoDetalle=MovimientoDetalleSerializer(data=request.data)
+        serMovimientoDetalle.is_valid(raise_exception=True)
+        serMovimientoDetalle.save()
+        return Response(serMovimientoDetalle.data)
+
+class MovimientoDetalleDetailView(APIView):
+    def get(self,request,movdetalle_id):
+        dataMovimientoDetalle=MovimientoDetalle.objects.get(pk=movdetalle_id)
+        serMovimientoDetalle=MovimientoDetalleSerializer(dataMovimientoDetalle)
+        return Response(serMovimientoDetalle.data)
+
+    def put(self,request,movdetalle_id):
+        dataMovimientoDetalle=Movimiento.objects.get(pk=movdetalle_id)
+        serMovimientoDetalle=MovimientoSerializer(dataMovimientoDetalle,data=request.data)
+        serMovimientoDetalle.is_valid(raise_exception=True)
+        serMovimientoDetalle.save()
+        return Response(serMovimientoDetalle.data)
+
+    def delete(self,request,movdetalle_id):
+        dataMovimientoDetalle=Producto.objects.get(pk=movdetalle_id)
+        serMovimientoDetalle=ProductoSerializer(dataMovimientoDetalle)
+        dataMovimientoDetalle.delete()
+        return Response(serMovimientoDetalle.data)
