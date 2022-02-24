@@ -1,3 +1,6 @@
 django
 djangorestframework
 cloudinary
+python-decouple
+#instalar cors
+django-cors-headers

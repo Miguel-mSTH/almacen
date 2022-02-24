@@ -19,12 +19,12 @@ class Ambiente(models.Model):
 class Producto(models.Model):
     NUEVO='nuevo'
     BUENO='bueno'
-    MALO='malo'
+    DEFECTUOSO='defectuoso'
 
     ESTADO_CHOICES=(
         (NUEVO,'Nuevo'),
         (BUENO,'Bueno'),
-        (MALO,'Malo'),
+        (DEFECTUOSO,'Defectuoso'),
     )
 
     categoria_id=models.ForeignKey(Categoria,on_delete=models.RESTRICT)
@@ -45,7 +45,12 @@ class Movimiento(models.Model):
         (REALIZADO,'Realizado'),
         (PROCESO,'Proceso')
     )
-    ambiente_id=models.ForeignKey(Ambiente,on_delete=models.RESTRICT)
+    #ambiente_origen=models.ForeignKey(Ambiente,related_name='Movimiento_Origen',to_field='ambiente_ubicacion',on_delete=models.RESTRICT,db_column='ambiente_origen',verbose_name='Origen')
+    #ambiente_destino=models.ForeignKey(Ambiente,related_name='Movimiento_Destino',to_field='ambiente_ubicacion',on_delete=models.RESTRICT,db_column='ambiente_destino',verbose_name='Destino')
+    ambiente_origen=models.ForeignKey(Ambiente,related_name='ambiente_origen', on_delete=models.RESTRICT,null=True)
+    ambiente_destino=models.ForeignKey(Ambiente,related_name='ambiente_destino',on_delete=models.RESTRICT,null=True)
+    #ambiente_origen=models.ForeignKey(Ambiente,on_delete=models.RESTRICT)
+    #ambiente_destino=models.ForeignKey(Ambiente,on_delete=models.RESTRICT)
     movimiento_fecha=models.DateTimeField()
     movimiento_tipo=models.IntegerField(default=1)
     movimiento_estado=models.CharField(max_length=20,default='realizado',choices=ESTADO_CHOICES)
@@ -67,6 +72,8 @@ class MovimientoDetalle(models.Model):
     movdetalle_estado=models.CharField(max_length=20,default='realizado',choices=ESTADO_CHOICES)
     #como hacer que no sea obligatorio los decimales
     movdetalle_cantidad=models.DecimalField(max_digits=5,decimal_places=2)
+    #doublefield
+    #floatfield--
     movdetalle_sku=models.CharField(max_length=100)
     movdetalle_glosa=models.CharField(max_length=500)
 
