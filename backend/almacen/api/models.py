@@ -11,12 +11,13 @@ class Categoria(models.Model):
 class Ambiente(models.Model):
     ambiente_nombre=models.CharField(max_length=100);
     ambiente_ubicacion=models.CharField(max_length=200);
-    ambiente_tipo=models.IntegerField(default=1);
+    ambiente_tipo=models.IntegerField(default=1);#1=aula,2=laboratorio
 
     def __str__(self):
         return self.ambiente_nombre
 
 class Producto(models.Model):
+    #VIGENTE =0,ANULADO=1
     NUEVO='nuevo'
     BUENO='bueno'
     DEFECTUOSO='defectuoso'
@@ -38,6 +39,7 @@ class Producto(models.Model):
         return self.producto_nombre
 
 class Movimiento(models.Model):
+    #VIGENTE=0,ANULADO=1
     REALIZADO='realizado'
     PROCESO='proceso'
 
@@ -52,7 +54,7 @@ class Movimiento(models.Model):
     #ambiente_origen=models.ForeignKey(Ambiente,on_delete=models.RESTRICT)
     #ambiente_destino=models.ForeignKey(Ambiente,on_delete=models.RESTRICT)
     movimiento_fecha=models.DateTimeField()
-    movimiento_tipo=models.IntegerField(default=1)
+    movimiento_tipo=models.IntegerField(default=1)#(1=ingreso,-1=salida)
     movimiento_estado=models.CharField(max_length=20,default='realizado',choices=ESTADO_CHOICES)
     movimiento_observaciones=models.CharField(max_length=500)
 
@@ -60,6 +62,8 @@ class Movimiento(models.Model):
         return str(self.movimiento_estado)
 
 class MovimientoDetalle(models.Model):
+    #user_id
+    #VIGENTE=0,ANULADO=1
     REALIZADO='realizado'
     PROCESO='proceso'
 
@@ -75,7 +79,7 @@ class MovimientoDetalle(models.Model):
     #doublefield
     #floatfield--
     movdetalle_sku=models.CharField(max_length=100)
-    movdetalle_glosa=models.CharField(max_length=500)
+    movdetalle_glosa=models.CharField(max_length=500)#descripcion del producto que se esta moviendo movimiento
 
     def __str__(self):
         return str(self.movdetalle_cantidad)
