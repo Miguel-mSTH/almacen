@@ -15,6 +15,7 @@ import LockScreen from "./pages/auth/lockscreen";
 
 // //pages
 import Dashboard from "./pages/dashboard";
+
 import FormCategoria from "./pages/categoria-registro";
 import TableCategoria from "./pages/categoria-listado";
 import FormAmbiente from "./pages/ambiente-registro";
