@@ -1,8 +1,25 @@
 import React from "react";
 import "./index.scss";
 import { Row, Col, Card } from "react-bootstrap";
+import axios from "axios";
 
 class TableBasic extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      categorias: [],
+    };
+  }
+
+  componentDidMount() {
+    axios.get(`http://127.0.0.1:8000/categorias`).then((res) => {
+      console.log(res.data);
+      this.setState({
+        categorias: res.data,
+      });
+    });
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -20,21 +37,15 @@ class TableBasic extends React.Component {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                    </tr>
+                    {this.state.categorias.map((categoria, index) => {
+                      return (
+                        <tr>
+                          <td>{index + 1}</td>
+                          <td>{categoria.categoria_nombre}</td>
+                          <td>end</td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </Card.Body>
