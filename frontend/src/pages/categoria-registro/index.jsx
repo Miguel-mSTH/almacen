@@ -7,7 +7,7 @@ class FormBasic extends React.Component {
     return (
       <React.Fragment>
         <Row>
-          <Col sm="4">
+          <Col sm="12">
             <Card>
               <Card.Header>Registro de Categoria</Card.Header>
               <Card.Body>
