@@ -14,6 +14,8 @@ class AmbienteSerializer(serializers.ModelSerializer):
         fields='__all__'
 
 class ProductoSerializer(serializers.ModelSerializer):
+    categoria_id=serializers.StringRelatedField()
+    producto_fecreg=serializers.DateTimeField(format="%d-%m-%Y")
     class Meta:
         model=Producto
         fields='__all__'

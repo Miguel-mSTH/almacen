@@ -9,31 +9,44 @@ class Categoria(models.Model):
         return self.categoria_nombre
 
 class Ambiente(models.Model):
+    AMBIENTE_TIPO=(
+        (0,'SUMINISTROS'),
+        (1,'AULAS'),
+        (2,'AUDITORIOS'),
+        (3,'OFICINAS'),
+        (4,'LABORATORIOS'),
+        (9,'OBSOLETOS')
+    )
     ambiente_nombre=models.CharField(max_length=100);
     ambiente_ubicacion=models.CharField(max_length=200);
-    ambiente_tipo=models.IntegerField(default=1);#1=aula,2=laboratorio
+    ambiente_tipo=models.IntegerField(default=1,choices=AMBIENTE_TIPO);#1=aula,2=laboratorio
 
     def __str__(self):
         return self.ambiente_nombre
 
 class Producto(models.Model):
     #VIGENTE =0,ANULADO=1
-    NUEVO='nuevo'
-    BUENO='bueno'
-    DEFECTUOSO='defectuoso'
-
+    #PRODUCTO_CHOICES=(
+     #   ('A', 'Aprovado'),
+      #  ('B', 'Prueba de ssss')
+    #)
     ESTADO_CHOICES=(
-        (NUEVO,'Nuevo'),
-        (BUENO,'Bueno'),
-        (DEFECTUOSO,'Defectuoso'),
+        ('VIGENTE','VIGENTE'),
+        ('ANULADO','ANULADO'),
+    )
+    UNIDAD_CHOICES=(
+        ('UN','UNIDAD'),
+        ('LT','LITROS'),
+        ('KG','KILOGRAMOS'),
+        ('PQ','PAQUETE')
     )
 
     categoria_id=models.ForeignKey(Categoria,on_delete=models.RESTRICT)
     producto_nombre = models.CharField(max_length=200)
     producto_fecreg=models.DateTimeField()
-    producto_estado=models.CharField(max_length=20,default='nuevo',choices=ESTADO_CHOICES)
+    producto_estado=models.CharField(max_length=20,default='VIGENTE',choices=ESTADO_CHOICES)
     producto_imgurl=CloudinaryField('image',default='')
-    producto_unidad=models.CharField(max_length=5)
+    producto_unidad=models.CharField(max_length=2,default='UN',choices=UNIDAD_CHOICES)
 
     def __str__(self):
         return self.producto_nombre

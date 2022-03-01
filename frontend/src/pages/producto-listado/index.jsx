@@ -32,7 +32,7 @@ class EcommerceProducts extends React.Component {
                     to="/producto/registro"
                     className="btn btn-primary btn-rounded box-shadow btn-icon"
                   >
-                    <i className="fa fa-plus" /> Add New Product
+                    <i className="fa fa-plus" /> Agregar Producto
                   </Link>
                 </div>
                 Listado de Productos
