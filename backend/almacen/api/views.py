@@ -1,9 +1,11 @@
-from dataclasses import dataclass
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .models import Categoria,Ambiente,Producto,Movimiento,MovimientoDetalle
-from .serializers import CategoriaSerializer,AmbienteSerializer,ProductoSerializer,MovimientoSerializer,MovimientoDetalleSerializer
+from django.contrib.auth.models import User
+from .serializers import CategoriaSerializer,AmbienteSerializer,ProductoSerializer,MovimientoSerializer,MovimientoDetalleSerializer,UsuarioSerializer,UsuarioLoginSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class IndexView(APIView):
     def get(self,request):
@@ -163,3 +165,32 @@ class MovimientoDetalleDetailView(APIView):
         serMovimientoDetalle=ProductoSerializer(dataMovimientoDetalle)
         dataMovimientoDetalle.delete()
         return Response(serMovimientoDetalle.data)
+
+class UsuarioLoginView(TokenObtainPairView):
+    #permission_classes=(AllowAny)
+    serializer_class=UsuarioLoginSerializer
+
+class UsuarioView(APIView):
+    def get(self,request):
+        usuarioData=User.objects.all()
+        usuarioSer=UsuarioSerializer(usuarioData,many=True)
+        return Response(usuarioSer.data)
+
+    def post(self,request):
+        usuarioSer=UsuarioSerializer(data=request.data)
+        usuarioSer.is_valid(raise_exception=True)
+        usuarioSer.save()
+        return Response(usuarioSer.data)
+
+class LogoutView(APIView):
+    #permission_classes = (AllowAny)
+    authentication_classes = ()
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)

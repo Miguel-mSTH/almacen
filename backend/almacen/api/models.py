@@ -1,6 +1,7 @@
 from django.db import models
 
 from cloudinary.models import CloudinaryField
+from django.contrib.auth.models import User
 # Create your models here.
 class Categoria(models.Model):
     categoria_nombre=models.CharField(max_length=100)
@@ -62,6 +63,7 @@ class Movimiento(models.Model):
     )
     #ambiente_origen=models.ForeignKey(Ambiente,related_name='Movimiento_Origen',to_field='ambiente_ubicacion',on_delete=models.RESTRICT,db_column='ambiente_origen',verbose_name='Origen')
     #ambiente_destino=models.ForeignKey(Ambiente,related_name='Movimiento_Destino',to_field='ambiente_ubicacion',on_delete=models.RESTRICT,db_column='ambiente_destino',verbose_name='Destino')
+    movimiento_usuario=models.OneToOneField (User,on_delete=models.RESTRICT,null=True)
     ambiente_origen=models.ForeignKey(Ambiente,related_name='ambiente_origen', on_delete=models.RESTRICT,null=True)
     ambiente_destino=models.ForeignKey(Ambiente,related_name='ambiente_destino',on_delete=models.RESTRICT,null=True)
     #ambiente_origen=models.ForeignKey(Ambiente,on_delete=models.RESTRICT)
