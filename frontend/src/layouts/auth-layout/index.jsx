@@ -28,7 +28,7 @@ export default function AuthLayout(props) {
                 </div>
                 <div className="misc-box">{props.children}</div>
                 <div className="text-center misc-footer">
-                  <p>Copyright © 2020 Ducor</p>
+                  <p>Copyright © 2020 CodiGO</p>
                 </div>
               </Col>
             </Row>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Dropdown, Image } from "react-bootstrap";
+//import AuthService from "../../services/auth.service";
 import "./style.scss";
 
 const TopbarUserProfile = () => {
@@ -37,7 +38,7 @@ const TopbarUserProfile = () => {
           </Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item as="li">
-            <Link to={`/auth/login`}>
+            <Link to={`auth/login`}>
               <i className="icon-logout" />
               Logout
             </Link>
