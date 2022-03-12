@@ -16,7 +16,7 @@ class Ambiente(models.Model):
         (2,'AUDITORIOS'),
         (3,'OFICINAS'),
         (4,'LABORATORIOS'),
-        (9,'OBSOLETOS')
+        (9,'OBSOLETOS'),
     )
     ambiente_nombre=models.CharField(max_length=100);
     ambiente_ubicacion=models.CharField(max_length=200);
@@ -42,7 +42,7 @@ class Producto(models.Model):
         ('PQ','PAQUETE')
     )
 
-    categoria_id=models.ForeignKey(Categoria,on_delete=models.RESTRICT)
+    categoria_id=models.ForeignKey(Categoria,on_delete=models.RESTRICT,null=True)
     producto_nombre = models.CharField(max_length=200)
     producto_fecreg=models.DateTimeField()
     producto_estado=models.CharField(max_length=20,default='VIGENTE',choices=ESTADO_CHOICES)
@@ -54,23 +54,23 @@ class Producto(models.Model):
 
 class Movimiento(models.Model):
     #VIGENTE=0,ANULADO=1
-    REALIZADO='realizado'
-    PROCESO='proceso'
+    VIGENTE='vigente'
+    ANULADO='anulado'
 
     ESTADO_CHOICES=(
-        (REALIZADO,'Realizado'),
-        (PROCESO,'Proceso')
+        (VIGENTE,'Vigente'),
+        (ANULADO,'Anulado')
     )
     #ambiente_origen=models.ForeignKey(Ambiente,related_name='Movimiento_Origen',to_field='ambiente_ubicacion',on_delete=models.RESTRICT,db_column='ambiente_origen',verbose_name='Origen')
     #ambiente_destino=models.ForeignKey(Ambiente,related_name='Movimiento_Destino',to_field='ambiente_ubicacion',on_delete=models.RESTRICT,db_column='ambiente_destino',verbose_name='Destino')
-    movimiento_usuario=models.OneToOneField (User,on_delete=models.RESTRICT,null=True)
+    movimiento_usuario=models.ForeignKey (User,on_delete=models.RESTRICT,null=True)
     ambiente_origen=models.ForeignKey(Ambiente,related_name='ambiente_origen', on_delete=models.RESTRICT,null=True)
     ambiente_destino=models.ForeignKey(Ambiente,related_name='ambiente_destino',on_delete=models.RESTRICT,null=True)
     #ambiente_origen=models.ForeignKey(Ambiente,on_delete=models.RESTRICT)
     #ambiente_destino=models.ForeignKey(Ambiente,on_delete=models.RESTRICT)
     movimiento_fecha=models.DateTimeField()
     movimiento_tipo=models.IntegerField(default=1)#(1=ingreso,-1=salida)
-    movimiento_estado=models.CharField(max_length=20,default='realizado',choices=ESTADO_CHOICES)
+    movimiento_estado=models.CharField(max_length=20,default='vigente',choices=ESTADO_CHOICES)
     movimiento_observaciones=models.CharField(max_length=500)
 
     def __str__(self):
@@ -79,12 +79,12 @@ class Movimiento(models.Model):
 class MovimientoDetalle(models.Model):
     #user_id
     #VIGENTE=0,ANULADO=1
-    REALIZADO='realizado'
-    PROCESO='proceso'
+    VIGENTE='vigente'
+    ANULADO='anulado'
 
     ESTADO_CHOICES=(
-        (REALIZADO,'Realizado'),
-        (PROCESO,'Proceso')
+        (VIGENTE,'Vigente'),
+        (ANULADO,'Anulado')
     )
     producto_id=models.ForeignKey(Producto,on_delete=models.RESTRICT)
     movimiento_id=models.ForeignKey(Movimiento,on_delete=models.RESTRICT)

@@ -20,12 +20,13 @@ class FormBasic extends React.Component {
   }
   guardar(e) {
     e.preventDefault();
-    axios.post(`http://localhost:8000/categorias`, {
-      categoria_nombre: this.state.categoria_nombre,
-    });
-    this.setState({
-      categoria_nombre: "",
-    });
+    axios
+      .post(`http://localhost:8000/categorias`, {
+        categoria_nombre: this.state.categoria_nombre,
+      })
+      .then(() => {
+        window.location.reload();
+      });
   }
   render() {
     return (

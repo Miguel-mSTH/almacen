@@ -16,14 +16,14 @@ class FormValidations extends React.Component {
     this.cambioTipo = this.cambioTipo.bind(this);
     this.guardar = this.guardar.bind(this);
   }
-  componentDidMount() {
+  /* componentDidMount() {
     axios.get(`http://127.0.0.1:8000/ambientes`).then((res) => {
       console.log(res.data);
       this.setState({
         ambientes: res.data,
       });
     });
-  }
+  } */
   cambioNombre(e) {
     this.setState({
       ambiente_nombre: e.target.value,
@@ -41,16 +41,15 @@ class FormValidations extends React.Component {
   }
   guardar(e) {
     e.preventDefault();
-    axios.post(`http://localhost:8000/ambientes`, {
-      ambiente_nombre: this.state.ambiente_nombre,
-      ambiente_ubicacion: this.state.ambiente_ubicacion,
-      ambiente_tipo: this.state.ambiente_tipo,
-    });
-    this.setState({
-      ambiente_nombre: "",
-      ambiente_ubicacion: "",
-      ambiente_tipo: "",
-    });
+    axios
+      .post(`http://localhost:8000/ambientes`, {
+        ambiente_nombre: this.state.ambiente_nombre,
+        ambiente_ubicacion: this.state.ambiente_ubicacion,
+        ambiente_tipo: this.state.ambiente_tipo,
+      })
+      .then(() => {
+        window.location.reload();
+      });
   }
   render() {
     return (
