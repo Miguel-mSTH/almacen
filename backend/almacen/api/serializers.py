@@ -67,6 +67,7 @@ class UsuarioLoginSerializer(TokenObtainPairSerializer):
         #data["refresh"]=str(refresh)
         data["token"]=str(refresh.access_token)
         data["user"]=str(self.user.username)
+        data["id"]=self.user.id
 
         if api_settings.UPDATE_LAST_LOGIN:
             update_last_login(None,self.user)

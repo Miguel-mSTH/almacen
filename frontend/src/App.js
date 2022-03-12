@@ -19,6 +19,7 @@ import FormIngreso from "./pages/ingreso-registro";
 import FormSalida from "./pages/salida-registro";
 import TableIngreso from "./pages/ingreso-listado";
 import TableSalida from "./pages/salida-listado";
+import VistaIngreso from "./pages/ingreso-vista";
 
 //Widgets
 //import Page404 from "./pages/page-error/page-404";
@@ -53,7 +54,6 @@ class App extends Component {
       <BrowserRouter>
         {currentUser ? (
           <Switch>
-            <Route path={`/auth/login`} component={Login} />
             <Layout name="backend">
               <Route
                 exact
@@ -71,13 +71,14 @@ class App extends Component {
               <Route path={`/ingreso/listado`} component={TableIngreso} />
               <Route path={`/salida/registro`} component={FormSalida} />
               <Route path={`/salida/listado`} component={TableSalida} />
+              <Route path={`/ingreso/vista`} component={VistaIngreso} />
             </Layout>
           </Switch>
         ) : (
           <Switch>
             <Route
               exact
-              path="/auth"
+              path="/"
               render={() => <Redirect to="/auth/login" />}
             />
             <Route path={`/auth/login`} component={Login} />
@@ -85,7 +86,7 @@ class App extends Component {
             <Route path={`/auth/forget-password`} component={ResetPassword} />
             <Route path={`/auth/lock-screen`} component={LockScreen} />
 
-            <Redirect to={Login} />
+            {/* <Redirect to={Login} /> */}
           </Switch>
         )}
       </BrowserRouter>

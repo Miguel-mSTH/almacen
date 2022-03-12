@@ -1,7 +1,9 @@
 django
+psycopg2
 djangorestframework
 cloudinary
 python-decouple
 #instalar cors
 django-cors-headers
 djangorestframework-simplejwt
+dj-database-url

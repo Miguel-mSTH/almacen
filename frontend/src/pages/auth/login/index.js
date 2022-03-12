@@ -44,7 +44,7 @@ class Login extends React.Component {
 
     AuthService.login(this.state.username, this.state.password).then(
       () => {
-        this.props.history.push("/");
+        this.props.history.push("/dashboard");
         window.location.reload();
       },
       (error) => {
